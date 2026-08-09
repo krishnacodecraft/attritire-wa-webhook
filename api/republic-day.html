@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Happy Republic Day</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{display:flex;align-items:center;justify-content:center;min-height:100vh;background:#0a0a1a;overflow:hidden;font-family:'Georgia',serif}
+.poster{width:800px;height:800px;position:relative;background:linear-gradient(180deg,#1a0a2e 0%,#0d1b3e 40%,#0a1628 100%);overflow:hidden}
+/* Ashoka Chakra */
+.chakra{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:120px;height:120px}
+.chakra-outer{fill:none;stroke:#fff;stroke-width:1.5;animation:spin 20s linear infinite}
+.chakra-inner{fill:none;stroke:#fff;stroke-width:1}
+.chakra-center{fill:#fff}
+.chakra-spoke{stroke:#fff;stroke-width:1;transform-origin:60px 60px}
+@keyframes spin{from{transform:translate(-50%,-50%) rotate(0)}to{transform:translate(-50%,-50%) rotate(360deg)}}
+/* Tiranga stripes */
+.stripe-saffron{position:absolute;top:0;left:0;right:0;height:33.33%;background:linear-gradient(180deg,#FF9933,#FF8C1A)}
+.stripe-white{position:absolute;top:33.33%;left:0;right:0;height:33.33%;background:linear-gradient(180deg,#fff,#f0f0f5)}
+.stripe-green{position:absolute;top:66.66%;left:0;right:0;height:33.34%;background:linear-gradient(180deg,#13884B,#0d6b3a)}
+/* Text */
+.title{position:absolute;top:8%;width:100%;text-align:center;z-index:10}
+.title h1{font-size:52px;font-weight:700;color:#fff;text-shadow:0 0 40px rgba(255,153,51,0.6),0 2px 4px rgba(0,0,0,0.5);letter-spacing:3px}
+.title .sub{font-size:20px;color:#FF9933;margin-top:8px;letter-spacing:5px;text-transform:uppercase}
+/* Particles */
+.particles{position:absolute;inset:0;overflow:hidden}
+.particle{position:absolute;width:3px;height:3px;background:#FF9933;border-radius:50%;animation:float 6s infinite}
+.particle:nth-child(odd){background:#fff;animation-duration:8s}
+.particle:nth-child(3n){background:#13884B;animation-duration:10s}
+@keyframes float{0%{transform:translateY(100vh) scale(0);opacity:0}20%{opacity:1}80%{opacity:1}100%{transform:translateY(-10vh) scale(1);opacity:0}}
+/* Bottom text */
+.bottom-text{position:absolute;bottom:10%;width:100%;text-align:center;z-index:10}
+.bottom-text h2{font-size:28px;color:#fff;font-weight:400;letter-spacing:2px;text-shadow:0 0 20px rgba(255,255,255,0.3)}
+.bottom-text .date{font-size:18px;color:#FF9933;margin-top:6px;letter-spacing:3px}
+/* Stars */
+.star{position:absolute;background:#fff;border-radius:50%;animation:twinkle 3s infinite}
+@keyframes twinkle{0%,100%{opacity:0.3}50%{opacity:1}}
+/* Glow */
+.glow{position:absolute;width:300px;height:300px;top:50%;left:50%;transform:translate(-50%,-50%);background:radial-gradient(circle,rgba(255,153,51,0.15),transparent 70%);border-radius:50%;z-index:5}
+/* Chakra center dot pulse */
+.pulse{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:12px;height:12px;background:#fff;border-radius:50%;z-index:6;animation:pulse-anim 2s infinite}
+@keyframes pulse-anim{0%,100%{box-shadow:0 0 0 0 rgba(255,255,255,0.6)}50%{box-shadow:0 0 20px 10px rgba(255,255,255,0.2)}}
+</style>
+</head>
+<body>
+<div class="poster">
+  <div class="stripe-saffron"></div>
+  <div class="stripe-white"></div>
+  <div class="stripe-green"></div>
+  <div class="glow"></div>
+  <div class="chakra">
+    <svg viewBox="0 0 120 120">
+      <circle cx="60" cy="60" r="48" class="chakra-outer"/>
+      <circle cx="60" cy="60" r="40" class="chakra-inner"/>
+      <circle cx="60" cy="60" r="3" class="chakra-center"/>
+      <!-- 24 spokes -->
+      <line x1="60" y1="20" x2="60" y2="100" stroke="#fff" stroke-width="0.8"/>
+      <line x1="20" y1="60" x2="100" y2="60" stroke="#fff" stroke-width="0.8"/>
+      <line x1="31.7" y1="31.7" x2="88.3" y2="88.3" stroke="#fff" stroke-width="0.8"/>
+      <line x1="88.3" y1="31.7" x2="31.7" y2="88.3" stroke="#fff" stroke-width="0.8"/>
+      <line x1="60" y1="12" x2="60" y2="108" stroke="#fff" stroke-width="0.6"/>
+      <line x1="12" y1="60" x2="108" y2="60" stroke="#fff" stroke-width="0.6"/>
+      <line x1="26" y1="26" x2="94" y2="94" stroke="#fff" stroke-width="0.6"/>
+      <line x1="94" y1="26" x2="26" y2="94" stroke="#fff" stroke-width="0.6"/>
+    </svg>
+  </div>
+  <div class="pulse"></div>
+  <div class="title">
+    <h1>Happy Republic Day</h1>
+    <div class="sub">🇮🇳 Jai Hind 🇮🇳</div>
+  </div>
+  <div class="bottom-text">
+    <h2>सत्यमेव जयते</h2>
+    <div class="date">26 January</div>
+  </div>
+  <!-- Particles -->
+  <div class="particles">
+    <div class="particle" style="left:10%;animation-delay:0s"></div>
+    <div class="particle" style="left:20%;animation-delay:0.5s"></div>
+    <div class="particle" style="left:30%;animation-delay:1s"></div>
+    <div class="particle" style="left:40%;animation-delay:1.5s"></div>
+    <div class="particle" style="left:50%;animation-delay:2s"></div>
+    <div class="particle" style="left:60%;animation-delay:0.3s"></div>
+    <div class="particle" style="left:70%;animation-delay:0.8s"></div>
+    <div class="particle" style="left:80%;animation-delay:1.3s"></div>
+    <div class="particle" style="left:90%;animation-delay:0.6s"></div>
+    <div class="particle" style="left:15%;animation-delay:2.5s"></div>
+    <div class="particle" style="left:35%;animation-delay:3s"></div>
+    <div class="particle" style="left:55%;animation-delay:1.8s"></div>
+    <div class="particle" style="left:75%;animation-delay:2.8s"></div>
+    <div class="particle" style="left:85%;animation-delay:3.2s"></div>
+    <div class="particle" style="left:95%;animation-delay:2.2s"></div>
+  </div>
+  <!-- Stars -->
+  <div class="star" style="top:5%;left:15%;width:2px;height:2px;animation-delay:0s"></div>
+  <div class="star" style="top:12%;left:85%;width:2px;height:2px;animation-delay:1s"></div>
+  <div class="star" style="top:8%;left:50%;width:1.5px;height:1.5px;animation-delay:0.5s"></div>
+  <div class="star" style="top:80%;left:10%;width:2px;height:2px;animation-delay:1.5s"></div>
+  <div class="star" style="top:75%;left:90%;width:1.5px;height:1.5px;animation-delay:0.8s"></div>
+  <div class="star" style="top:20%;left:5%;width:2px;height:2px;animation-delay:2s"></div>
+  <div class="star" style="top:85%;left:45%;width:1.5px;height:1.5px;animation-delay:1.2s"></div>
+  <div class="star" style="top:15%;left:70%;width:2px;height:2px;animation-delay:2.5s"></div>
+</div>
+</body>
+</html>
