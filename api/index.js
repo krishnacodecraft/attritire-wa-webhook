@@ -106,10 +106,11 @@ app.post('/tablly-webhook', async (req, res) => {
 
     // Try to extract phone number and transcript
     const calledTo = data.called_to || data.to || data.phone_number || '';
-    const transcript = data.transcript || data.conversation || data.text || '';
-    const callStatus = data.status || data.call_status || '';
+    const transcript = data.call_transcript || data.transcript || '';
+    const callStatus = data.call_status || data.status || '';
+    const summary = data.call_summary || '';
 
-    if (calledTo && transcript) {
+    if (calledTo && transcript && transcript !== 'No Call Transcript Available') {
       // Send WhatsApp follow-up
       const waNumber = calledTo.replace(/[^0-9]/g, '');
       const summary = transcript.substring(0, 500);
