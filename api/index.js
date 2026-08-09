@@ -8,6 +8,7 @@ const VERIFY_TOKEN = process.env.VERIFY_TOKEN || 'attritire_wa_webhook_2026';
 const PHONE_ID = process.env.PHONE_NUMBER_ID || '1267139103153025';
 const TOKEN = process.env.ACCESS_TOKEN || '';
 const messages = [];
+const agentStatus = {}; // Store agent status in memory
 
 function sendWAMessage(to, text) {
   return new Promise((resolve, reject) => {
@@ -126,15 +127,21 @@ app.post('/tablly-webhook', async (req, res) => {
   } catch (e) { console.error('Tablly webhook error:', e.message); }
 });
 
-// Agent status endpoint for dashboard
-app.get('/api/agent-status', (_, res) => {
-  const fs = require('fs');
-  try {
-    const data = JSON.parse(fs.readFileSync('/opt/data/agent_status.json', 'utf-8'));
-    res.json(data);
-  } catch(e) {
-    res.json({});
+// Agent status — GET for dashboard, POST for agents to report
+app.get('/api/agent-status', (_, res) => res.json(agentStatus));
+
+app.post('/api/agent-status', (req, res) => {
+  const { agent, action, detail, status } = req.body;
+  if (agent) {
+    agentStatus[agent] = {
+      agent, status: status || 'active',
+      last_action: action || 'ping',
+      detail: detail || '',
+      last_update: new Date().toLocaleTimeString(),
+      tasks_completed: (agentStatus[agent]?.tasks_completed || 0) + 1
+    };
   }
+  res.json({ ok: true });
 });
 
 const port = process.env.PORT || 3000;
