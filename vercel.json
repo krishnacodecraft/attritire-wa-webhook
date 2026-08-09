@@ -1,8 +1,4 @@
 {
-  "builds": [{ "src": "api/index.py", "use": "@vercel/python" }],
-  "routes": [{ "src": "/(.*)", "dest": "api/index.py" }],
-  "env": {
-    "VERIFY_TOKEN": "attritire_wa_webhook_2026",
-    "PHONE_NUMBER_ID": "1267139103153025"
-  }
+  "builds": [{ "src": "api/index.js", "use": "@vercel/node" }],
+  "routes": [{ "src": "/(.*)", "dest": "api/index.js" }]
 }
