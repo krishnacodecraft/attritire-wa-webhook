@@ -1,5 +1,6 @@
 const express = require('express');
 const https = require('https');
+const path = require('path');
 const app = express();
 app.use(express.json());
 
@@ -90,11 +91,35 @@ app.post('/api/send', async (req, res) => {
 });
 
 app.get('/dashboard', (_, res) => {
-  res.sendFile(__dirname + '/dashboard.html');
+  res.sendFile(path.join(__dirname, 'dashboard.html'));
 });
 
 app.get('/health', (_, res) => res.send('OK'));
 app.get('/inbox', (_, res) => res.json({ messages }));
+
+// === TABLLY WEBHOOK ===
+app.post('/tablly-webhook', async (req, res) => {
+  res.sendStatus(200);
+  try {
+    const data = req.body;
+    console.log('📞 Tablly webhook received:', JSON.stringify(data).substring(0, 500));
+
+    // Try to extract phone number and transcript
+    const calledTo = data.called_to || data.to || data.phone_number || '';
+    const transcript = data.transcript || data.conversation || data.text || '';
+    const callStatus = data.status || data.call_status || '';
+
+    if (calledTo && transcript) {
+      // Send WhatsApp follow-up
+      const waNumber = calledTo.replace(/[^0-9]/g, '');
+      const summary = transcript.substring(0, 500);
+      const waMsg = `📞 *Call Summary from Startup India*\n\nThank you for speaking with us! Here's a quick summary:\n\n"${summary}"\n\nReply to this message if you have any questions!`;
+
+      await sendWAMessage(waNumber, waMsg);
+      console.log(`✅ WhatsApp sent to ${waNumber} after Tablly call`);
+    }
+  } catch (e) { console.error('Tablly webhook error:', e.message); }
+});
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`Startup India WhatsApp on port ${port}`));
