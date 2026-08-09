@@ -122,6 +122,17 @@ app.post('/tablly-webhook', async (req, res) => {
   } catch (e) { console.error('Tablly webhook error:', e.message); }
 });
 
+// Agent status endpoint for dashboard
+app.get('/api/agent-status', (_, res) => {
+  const fs = require('fs');
+  try {
+    const data = JSON.parse(fs.readFileSync('/opt/data/agent_status.json', 'utf-8'));
+    res.json(data);
+  } catch(e) {
+    res.json({});
+  }
+});
+
 const port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`Startup India WhatsApp on port ${port}`));
 module.exports = app;

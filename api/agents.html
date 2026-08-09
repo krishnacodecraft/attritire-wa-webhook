@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>AI Agent Dashboard — Startup India</title>
+<meta http-equiv="refresh" content="15">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:Inter,system-ui,sans-serif;background:#0a0a0c;color:#eceae5;min-height:100vh;padding:24px}
+.header{text-align:center;margin-bottom:32px}
+.header h1{font-family:'Playfair Display',serif;font-size:28px;margin-bottom:4px}
+.header h1 span{color:#c4956a}
+.header p{color:#918e86;font-size:14px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:18px;max-width:1200px;margin:0 auto}
+.card{background:#121216;border:1px solid rgba(255,255,255,0.06);border-radius:16px;padding:24px;transition:all .3s}
+.card:hover{border-color:rgba(196,149,106,0.3)}
+.card-header{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.card-icon{font-size:32px}
+.card-name{font-size:16px;font-weight:600}
+.card-status{font-size:11px;font-weight:600;padding:4px 12px;border-radius:999px;margin-left:auto}
+.status-active{background:rgba(37,211,102,0.15);color:#25d366}
+.status-idle{background:rgba(145,142,134,0.15);color:#918e86}
+.status-error{background:rgba(255,68,68,0.15);color:#ff4444}
+.card-action{font-size:13px;color:#c4956a;margin-bottom:6px}
+.card-detail{font-size:12px;color:#918e86;line-height:1.6}
+.card-footer{display:flex;justify-content:space-between;margin-top:14px;padding-top:12px;border-top:1px solid rgba(255,255,255,0.06);font-size:11px;color:#555}
+.stats{margin-top:24px;display:grid;grid-template-columns:repeat(4,1fr);gap:12px;max-width:1200px;margin:24px auto 0}
+.stat{background:#121216;border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:18px;text-align:center}
+.stat h3{font-family:'Playfair Display',serif;font-size:28px;color:#c4956a}
+.stat span{font-size:11px;color:#918e86}
+</style>
+</head>
+<body>
+<div class="header"><h1>Startup India<span>.</span> AI Agents</h1><p>Real-time monitoring dashboard — auto-refreshes every 15s</p></div>
+<div class="grid" id="agents">Loading agent status...</div>
+<div class="stats" id="stats"></div>
+<script>
+async function load() {
+  try {
+    const res = await fetch('/api/agent-status');
+    const data = await res.json();
+    const agents = document.getElementById('agents');
+    const stats = document.getElementById('stats');
+    
+    const agentsList = [
+      {id:'🕵️ Alpha (Call Monitor)',icon:'🕵️',role:'Tablly Call Scanner'},
+      {id:'🏗️ Beta (Demo Builder)',icon:'🏗️',role:'Demo Website Generator'},
+      {id:'📩 Gamma (WhatsApp)',icon:'📩',role:'WhatsApp Messenger'},
+      {id:'💬 Delta (Reply Handler)',icon:'💬',role:'Customer Reply Monitor'}
+    ];
+    
+    let totalTasks = 0, activeCount = 0;
+    agents.innerHTML = agentsList.map(a => {
+      const agent = data[a.id] || {};
+      const status = agent.status || 'idle';
+      const statusClass = status === 'active' || status === 'sent' || status === 'deployed' ? 'status-active' : 
+                         status === 'error' ? 'status-error' : 'status-idle';
+      if (status !== 'idle' && status !== 'error') activeCount++;
+      totalTasks += agent.tasks_completed || 0;
+      return `<div class="card">
+        <div class="card-header">
+          <div class="card-icon">${a.icon}</div>
+          <div class="card-name">${a.role}</div>
+          <div class="card-status ${statusClass}">${agent.status || 'initializing'}</div>
+        </div>
+        <div class="card-action">${agent.last_action || 'Starting up...'}</div>
+        <div class="card-detail">${agent.detail || 'Waiting for first task'}</div>
+        <div class="card-footer">
+          <span>Updated: ${agent.last_update || '--'}</span>
+          <span>Tasks: ${agent.tasks_completed || 0}</span>
+        </div>
+      </div>`;
+    }).join('');
+    
+    stats.innerHTML = `
+      <div class="stat"><h3>${agentsList.length}</h3><span>Active Agents</span></div>
+      <div class="stat"><h3>${totalTasks}</h3><span>Tasks Completed</span></div>
+      <div class="stat"><h3>${activeCount}</h3><span>Currently Working</span></div>
+      <div class="stat"><h3>${new Date().toLocaleTimeString()}</h3><span>Last Refresh</span></div>
+    `;
+  } catch(e) {
+    document.getElementById('agents').innerHTML = '<div class="card" style="grid-column:1/-1;text-align:center;color:#ff4444">⚠️ Could not load agent status</div>';
+  }
+}
+load();
+setInterval(load, 15000);
+</script>
+</body>
+</html>
