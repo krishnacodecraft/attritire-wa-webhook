@@ -94,6 +94,10 @@ app.get('/dashboard', (_, res) => {
   res.sendFile(path.join(__dirname, 'dashboard.html'));
 });
 
+app.get('/agents.html', (_, res) => {
+  res.sendFile(path.join(__dirname, 'agents.html'));
+});
+
 app.get('/health', (_, res) => res.send('OK'));
 app.get('/inbox', (_, res) => res.json({ messages }));
 
