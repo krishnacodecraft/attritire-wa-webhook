@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: attritire-wa-webhook
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app --bind 0.0.0.0:$PORT
+    envVars:
+      - key: VERIFY_TOKEN
+        value: attritire_wa_webhook_2026
+      - key: ACCESS_TOKEN
+        sync: false
+      - key: PHONE_NUMBER_ID
+        value: 1267139103153025
