@@ -5,7 +5,7 @@ const app = express();
 app.use(express.json());
 
 const VERIFY_TOKEN = process.env.VERIFY_TOKEN || 'attritire_wa_webhook_2026';
-const PHONE_ID = process.env.PHONE_NUMBER_ID || '1267139103153025';
+const PHONE_ID = process.env.PHONE_NUMBER_ID || '1284388061421347';
 const TOKEN = process.env.ACCESS_TOKEN || '';
 const messages = [];
 const agentStatus = {}; // Store agent status in memory
